@@ -39,7 +39,6 @@ export const MainSection = () => {
   const [ratingRanges, setRatingRanges] = useState([]);
   const [discountRanges, setDiscountRanges] = useState([]);
   const [logoName, setLogoName] = useState([]);
-  const [selectedMobileSearchBar, setSelectedMobileSearchBar] = useState('');
   const itemsPerPage = 3;
 
   // useEffect(() => {
@@ -167,7 +166,7 @@ export const MainSection = () => {
       const price = item['mobile-price'];
       return price >= priceRange[0] && price <= priceRange[1];
     });
-    console.log("handleClick",filteredRanges);
+    console.log('handleClick', filteredRanges);
     setPriceRanges(filteredRanges);
   };
   console.log(priceRanges);
@@ -291,7 +290,6 @@ export const MainSection = () => {
       ? selectedMobileSearchBarVal
       : data;
 
-
   useEffect(() => {
     if (isChecked) {
       const checkedMobile = data.filter((item) =>
@@ -308,7 +306,7 @@ export const MainSection = () => {
           .toLowerCase()
           .includes(debouncedInputValue.toLowerCase())
       );
-      console.log(selectedMobileSearchBarVal);
+      // console.log(selectedMobileSearchBarVal);
       setInfoData(selectedMobileSearchBarVal.slice(0, 3));
       setHasMore(selectedMobileSearchBarVal.length > itemsPerPage);
     }
@@ -322,25 +320,35 @@ export const MainSection = () => {
       setHasMore(selectedMobile.length > itemsPerPage);
     }
 
-    // if(priceRanges.length){
-    //   setInfoData(priceRanges.slice(0, 3));
-    //   setHasMore(priceRanges.length > itemsPerPage);
-    // }
+    if (priceRanges.length) {
+      setInfoData(priceRanges.slice(0, 3));
+      setHasMore(priceRanges.length > itemsPerPage);
+    }
 
-    // if(ratingRanges){
-    //   setInfoData(ratingRanges.slice(0, 3));
-    //   setHasMore(ratingRanges.length > itemsPerPage);
-    // }
-
-  }, [isChecked, debouncedInputValue, selectedOption,]);
+    if (ratingRanges.length) {
+      setInfoData(ratingRanges.slice(0, 3));
+      setHasMore(ratingRanges.length > itemsPerPage);
+    }
+    if (discountRanges.length) {
+      setInfoData(discountRanges.slice(0, 3));
+      setHasMore(discountRanges.length > itemsPerPage);
+    }
+  }, [
+    isChecked,
+    debouncedInputValue,
+    selectedOption,
+    priceRanges,
+    ratingRanges,
+    discountRanges,
+  ]);
 
   const fetchMoreData = () => {
     setTimeout(() => {
       const currentLength = infoData.length + itemsPerPage;
       if (debouncedInputValue) {
       }
-      if (selectedOption) {
-      }
+      // if (selectedOption) {
+      // }
       // if(priceRanges){}
       // if(ratingRanges){}
       setInfoData(filteredData.slice(0, currentLength));
@@ -561,7 +569,6 @@ export const MainSection = () => {
   //     return null;
   //   }
   // });
-  console.log("ypppppppppppppppppppp",filteredData,infoData)
   return (
     <>
       <MainSectionContainer>
